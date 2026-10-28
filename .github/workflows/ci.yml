@@ -21,9 +21,7 @@ jobs:
 
       - name: 运行测试
         run: |
-          # 提前建好日志和截图文件夹，防止代码找不到路径报错
           mkdir -p uiAutoTestHmtt/log
           mkdir -p uiAutoTestHmtt/image
-          
-          # 运行测试
-          pytest uiAutoTestHmtt/scripts --alluredir=report
+          # 加一个 --collect-only 参数，意思是：只收集用例，不真正执行！
+          pytest uiAutoTestHmtt/scripts --collect-only --alluredir=report
