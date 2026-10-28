@@ -20,4 +20,6 @@ jobs:
         uses: browser-actions/setup-chrome@v1
 
       - name: 运行测试 (这里预计会报错)
-        run: pytest --alluredir=report
+        run: |
+          cd uiAutoTestHmtt
+          pytest --alluredir=report
