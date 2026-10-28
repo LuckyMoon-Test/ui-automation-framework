@@ -19,9 +19,8 @@ jobs:
       - name: 安装Chrome浏览器
         uses: browser-actions/setup-chrome@v1
 
+      # 5. 运行你的 pytest 测试用例
       - name: 运行测试
         run: |
-          mkdir -p uiAutoTestHmtt/log
-          mkdir -p uiAutoTestHmtt/image
-          # 加一个 --collect-only 参数，意思是：只收集用例，不真正执行！
-          pytest uiAutoTestHmtt/scripts --collect-only --alluredir=report
+          # 直接在最外层运行，指定具体路径，千万别用 cd
+          pytest uiAutoTestHmtt/scripts --alluredir=report

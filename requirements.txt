@@ -2,4 +2,3 @@ pytest
 selenium
 allure-pytest
 pyyaml
-Appium-Python-Client
