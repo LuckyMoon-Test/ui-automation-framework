@@ -19,8 +19,10 @@ jobs:
       - name: 安装Chrome浏览器
         uses: browser-actions/setup-chrome@v1
 
-      # 5. 运行你的 pytest 测试用例
       - name: 运行测试
         run: |
-          # 直接在最外层运行，指定具体路径，千万别用 cd
+          # 告诉云端：跑测试前，先帮我把日志和截图的文件夹建好
+          mkdir -p uiAutoTestHmtt/log
+          mkdir -p uiAutoTestHmtt/image
+          
           pytest uiAutoTestHmtt/scripts --alluredir=report
