@@ -19,7 +19,11 @@ jobs:
       - name: 安装Chrome浏览器
         uses: browser-actions/setup-chrome@v1
 
-      - name: 运行测试 (预计这里报错)
+      - name: 运行测试
         run: |
-          # 不要 cd 进去了，直接站在最外层，告诉它去 uiAutoTestHmtt/scripts 里面找用例
+          # 提前建好日志和截图文件夹，防止代码找不到路径报错
+          mkdir -p uiAutoTestHmtt/log
+          mkdir -p uiAutoTestHmtt/image
+          
+          # 运行测试
           pytest uiAutoTestHmtt/scripts --alluredir=report
