@@ -1,0 +1,23 @@
+name: UI Automation CI
+on: [ push ] # 只要你上传代码，它就自动跑
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 下载你的代码
+        uses: actions/checkout@v4
+
+      - name: 安装Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖包
+        run: pip install -r requirements.txt
+
+      - name: 安装Chrome浏览器
+        uses: browser-actions/setup-chrome@v1
+
+      - name: 运行测试 (这里预计会报错)
+        run: pytest --alluredir=report
