@@ -29,7 +29,7 @@ class AppBase(Base):
             return False
 
     # 2.从右向左滑动屏幕
-    def app_base_right_wipe_left(self, loc_area, click_text):
+    def app_base_right_wipe_left(self, loc_area, click_text):  # loc_area频道区域，__init__里定义，page里调用传参
         log.info('正在调用从右向左滑的方法')
         # 1.查找区域元素
         el = self.base_find(loc_area)
@@ -39,14 +39,17 @@ class AppBase(Base):
         width = el.size.get('width')
         height = el.size.get('height')
         # 4. 计算 strat_x，strat_y，end_x，end_y
-        start_x = width * 0.8
-        start_y = y + height * 0.5
-        end_x = width * 0.2
-        end_y = y + height * 0.5
+        start_x = width * 0.8  # 意思是起点在屏幕（或区域）宽度的 80% 处（也就是靠右边）
+        start_y = y + height * 0.5  # 意思是起点在屏幕（或区域）高度的正中间（50% 处）。
+        end_x = width * 0.2  # 意思是终点在宽度的 20% 处（靠左边）。
+        end_y = y + height * 0.5  # 终点高度不变。
+        # 手指从右边 80% 的地方，横着滑到左边 20% 的地方。
 
         # 组合频道元素配置信息
         # loc = By.XPATH, f'//*[@class="android.widget.HorizontalScrollView"]//*[contains(@text,"{click_text}")]'
-        loc = By.XPATH, f'//android.widget.HorizontalScrollView"/*[contains(@text,"{click_text}")]'
+        loc = By.XPATH, f'//android.widget.HorizontalScrollView//*[contains(@text,"{click_text}")]'
+        # 在刚才找到的滑动区域里面，随便什么标签的元素都可以，只要它包含指定的文字
+
         # 5. 循环操作
         while True:
             # 1.获取当前屏幕页面结构
@@ -55,7 +58,7 @@ class AppBase(Base):
             try:
                 sleep(2)
                 # 查找元素
-                el = self.base_find(loc, timeout=3)
+                el = self.base_find(loc, timeout=3)  # 找文字
                 # 输出提示信息
                 print(f'找到{loc}元素')
                 sleep(2)
@@ -66,7 +69,7 @@ class AppBase(Base):
             # 3.处理异常
             except:
                 # 输出提示信息
-                print(f'未找到{loc}元素')
+                print(f'未找到{loc}元素')     # 如果当前页面找不着文字，就滑动，如果不是最后一页，就再循环寻找文字，如果一直到最后一页都没有就抛异常
                 # 滑动屏幕
                 self.driver.swipe(start_x, start_y, end_x, end_y, duration=2000)
             # 4.判断是否为最后一页
@@ -76,8 +79,7 @@ class AppBase(Base):
                 # 抛出未找到元素异常
                 raise NoSuchElementException
 
-
-# 3.从下向上滑动屏幕
+    # 3.从下向上滑动屏幕
     def app_base_down_wipe_up(self, loc_area, click_text):
         log.info('正在调用从下向上滑的方法')
         # 1.查找区域元素
